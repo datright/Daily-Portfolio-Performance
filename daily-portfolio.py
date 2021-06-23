@@ -41,6 +41,10 @@ dates = list(tsd.keys()) # TODO: sort to ensure latest day is first. currently a
 latest_day = dates[0]
 
 latest_close = tsd[latest_day]["4. close"]
+latest_open = tsd[latest_day]["1. open"]
+
+
+
 
 #breakpoint()
 
@@ -49,18 +53,12 @@ latest_close = tsd[latest_day]["4. close"]
 # 2. INFO OUTPUTS
 
 print("-------------------------")
-print("SELECTED SYMBOL: ", symbol)
+print(f"SELECTED SYMBOL: {symbol}")
 print("-------------------------")
 print("REQUESTING STOCK MARKET DATA...")
 print("REQUEST AT: ", current_time.strftime("%Y-%m-%d %I:%M %p"))
 print("-------------------------")
 print(f"LATEST DAY: {last_refreshed}")
 print(f"LATEST CLOSE: {to_usd(float(latest_close))}")
-print("RECENT HIGH: $101,000.00")
-print("RECENT LOW: $99,000.00")
-print("-------------------------")
-print("RECOMMENDATION: BUY!")
-print("RECOMMENDATION REASON: TODO")
-print("-------------------------")
-print("HAPPY INVESTING!")
-print("-------------------------")
+print(f"LATEST OPEN: {to_usd(float(latest_open))}")
+print("hello")
