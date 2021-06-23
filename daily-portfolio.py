@@ -27,7 +27,7 @@ import csv
 
 with open('portfolio.csv','w+') as file:
     myFile=csv.writer(file)
-    myFile.writerow(["stock", "shares"])
+    myFile.writerow(["Stock", "Shares"])
     noOfStocks=int(input("Please enter the number of different stocks you own: "))
     for i in range (noOfStocks):
         Stock=input("Company " + str(i +1)+ " : What is the ticker of the stock you own? ")
@@ -40,12 +40,8 @@ with open('portfolio.csv','w+') as file:
 request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol={Stock}&apikey={ALPHAVANTAGE_API_KEY}"
 
 response = requests.get(request_url)
-#print(type(response)) #> requests.models.Response
-#print(response.text) #> 200
 
 parsed_response = json.loads(response.text)
-
-last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
 
 tsd = parsed_response["Time Series (Daily)"]
 
@@ -53,13 +49,19 @@ dates = list(tsd.keys()) # TODO: sort to ensure latest day is first. currently a
 
 latest_day = dates[0]
 
-latest_close = tsd[latest_day]["4. close"]
-latest_open = tsd[latest_day]["1. open"]
+latest_close = to_usd(float(tsd[latest_day]["4. close"]))
+latest_open = to_usd(float(tsd[latest_day]["1. open"]))
 
 
-import pandas
-df = pandas.read_csv('portfolio.csv')
-print(df)
+
+from pandas import read_csv
+df = read_csv("portfolio.csv")
+print(df.head())
+
+
+#col_list = ["Stock", "Shares"]
+#df = pandas.read_csv('portfolio.csv',usecols=col_list)
+#print(df)
 
 #breakpoint()
 
@@ -71,6 +73,6 @@ print(df)
 #print(f"SELECTED SYMBOL: {stock}")
 
 
-#print(f"LATEST DAY: {last_refreshed}")
-#print(f"LATEST CLOSE: {to_usd(float(latest_close))}")
-#print(f"LATEST OPEN: {to_usd(float(latest_open))}")
+print(f"LATEST CLOSE: {latest_close}")
+print(f"LATEST OPEN: {latest_open}")
+
