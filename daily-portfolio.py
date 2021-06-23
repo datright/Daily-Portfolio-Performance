@@ -2,9 +2,10 @@ import os
 from dotenv import load_dotenv
 import requests
 import json
-
+import datetime
 load_dotenv()
 
+current_time = datetime.datetime.now()
 def to_usd(my_price):
     """
     Converts a numeric value to usd-formatted string, for printing and display purposes.
@@ -68,9 +69,11 @@ print(df)
 # 2. INFO OUTPUTS
 
 
-#print(f"SELECTED SYMBOL: {stock}")
+print(f"SELECTED SYMBOL: {stock}")
+print("-------------------------")
+print(f"SELECTED SYMBOL: {symbol}")
+print("REQUEST AT: ", current_time.strftime("%Y-%m-%d %I:%M %p"))
+print(f"LATEST DAY: {last_refreshed}")
+print(f"LATEST CLOSE: {to_usd(float(latest_close))}")
+print(f"LATEST OPEN: {to_usd(float(latest_open))}")
 
-
-#print(f"LATEST DAY: {last_refreshed}")
-#print(f"LATEST CLOSE: {to_usd(float(latest_close))}")
-#print(f"LATEST OPEN: {to_usd(float(latest_open))}")
