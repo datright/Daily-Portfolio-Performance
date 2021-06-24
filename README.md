@@ -27,7 +27,7 @@ ALPHAVANTAGE_API_KEY="your unique key"
 ```
 
 ## Usage
-Run the game:
+Run the portfolio:
 ```
 python daily-portfolio.py
 ```
