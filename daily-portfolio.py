@@ -41,9 +41,10 @@ tsd = parsed_response["Time Series (Daily)"]
 dates = list(tsd.keys()) # TODO: sort to ensure latest day is first. currently assuming latest day is on top 
 
 latest_day = dates[0]
-
+prior_day = dates[1]
 latest_close = tsd[latest_day]["4. close"]
 latest_open = tsd[latest_day]["1. open"]
+prior_close = tsd[prior_day]["4. close"]
 
 
 
@@ -53,10 +54,11 @@ latest_open = tsd[latest_day]["1. open"]
 
 
 # 2. INFO OUTPUTS)
+int_latest = float(latest_close)
+int_prior = float(prior_close)
 
-int_latest = int(float(latest_close))
-print(int_latest)
-daily_px = int_latest/int_latest(1)-1
+daily_px = int_latest/int_prior-1
+daily_pd = int_latest-int_prior
 
 print("-------------------------")
 print(f"SELECTED SYMBOL: {symbol}")
@@ -67,4 +69,6 @@ print("-------------------------")
 print(f"LATEST DAY: {last_refreshed}")
 print(f"LATEST CLOSE: {to_usd(float(latest_close))}")
 print(f"LATEST OPEN: {to_usd(float(latest_open))}")
-print(f"DAILY CHANGE: ", daily_px)
+print(f"PRIOR DAY CLOSE: {to_usd(float(prior_close))}")
+print(f"DAILY $ CHANGE: ", to_usd(daily_px))
+print(f"DAILY % CHANGE: ", daily_pd)
