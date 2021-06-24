@@ -3,6 +3,8 @@ from dotenv import load_dotenv
 import requests
 import json
 import datetime
+import pandas 
+import math
 load_dotenv()
 
 current_time = datetime.datetime.now()
@@ -50,7 +52,11 @@ latest_open = tsd[latest_day]["1. open"]
 
 
 
-# 2. INFO OUTPUTS
+# 2. INFO OUTPUTS)
+
+int_latest = int(float(latest_close))
+print(int_latest)
+daily_px = int_latest/int_latest(1)-1
 
 print("-------------------------")
 print(f"SELECTED SYMBOL: {symbol}")
@@ -61,4 +67,4 @@ print("-------------------------")
 print(f"LATEST DAY: {last_refreshed}")
 print(f"LATEST CLOSE: {to_usd(float(latest_close))}")
 print(f"LATEST OPEN: {to_usd(float(latest_open))}")
-print("hello")
+print(f"DAILY CHANGE: ", daily_px)
