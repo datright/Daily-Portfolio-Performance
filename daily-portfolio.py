@@ -5,6 +5,11 @@ import json
 import datetime
 import pandas 
 import math
+
+
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+
 load_dotenv()
 
 current_time = datetime.datetime.now()
@@ -92,3 +97,49 @@ print(f"PRIOR DAY CLOSE: {to_usd(float(prior_close))}")
 print(f"DAILY $ CHANGE: ", to_usd(daily_pd))
 print(f"DAILY % CHANGE: ", percentage)
 
+
+SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
+SENDER_EMAIL_ADDRESS = os.getenv("SENDER_EMAIL_ADDRESS")
+
+
+def send_email(subject="[Daily Briefing] This is a test", html="<p>Hello World</p>", recipient_address=SENDER_EMAIL_ADDRESS):
+    """
+    Sends an email with the specified subject and html contents to the specified recipient,
+
+    If recipient is not specified, sends to the admin's sender address by default.
+    """
+    client = SendGridAPIClient(SENDGRID_API_KEY) #> <class 'sendgrid.sendgrid.SendGridAPIClient>
+    print("CLIENT:", type(client))
+    print("SUBJECT:", subject)
+    #print("HTML:", html)
+
+    message = Mail(from_email=SENDER_EMAIL_ADDRESS, to_emails=recipient_address, subject=subject, html_content=html)
+    try:
+        response = client.send(message)
+        print("RESPONSE:", type(response)) #> <class 'python_http_client.client.Response'>
+        print(response.status_code) #> 202 indicates SUCCESS
+        return response
+    except Exception as e:
+        print("OOPS", type(e), e.message)
+        return None
+
+
+if __name__ == "__main__":
+    subject = "Daily Portfolio Performance"
+
+    html = f"""
+    <h3>Daily Portfolio Performance Service</h3>
+
+    <h4>Today's Date</h4>
+    <p>Monday, January 1, 2040</p>
+
+    <h4>My Stocks</h4>
+    <ul>
+        <li>MSFT | +3%</li>
+        <li>GOOG | +2%</li>
+        <li>AAPL | +4%</li>
+    </ul>
+
+    """
+
+    send_email(subject, html)
