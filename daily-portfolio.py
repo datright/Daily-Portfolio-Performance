@@ -22,11 +22,25 @@ def to_usd(my_price):
 
 ALPHAVANTAGE_API_KEY = os.getenv("ALPHAVANTAGE_API_KEY")
 
-symbol = "MSFT"
+
+
+#capturing user input
+
+import csv
+
+with open('portfolio.csv','w+') as file:
+    myFile=csv.writer(file)
+    myFile.writerow(["stock", "shares"])
+    noOfStocks=int(input("Please enter the number of different stocks you own: "))
+    for i in range (noOfStocks):
+        Stock=input("Company " + str(i +1)+ " : What is the ticker of the stock you own? ")
+        Shares=input("Company " + str(i +1)+ ": How many shares do you own? ")
+        myFile.writerow([Stock,Shares])
+
 
 # 1. INFO INPUTS
 
-request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol={symbol}&apikey={ALPHAVANTAGE_API_KEY}"
+request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol={Stock}&apikey={ALPHAVANTAGE_API_KEY}"
 
 response = requests.get(request_url)
 #print(type(response)) #> requests.models.Response
@@ -46,8 +60,12 @@ latest_close = tsd[latest_day]["4. close"]
 latest_open = tsd[latest_day]["1. open"]
 prior_close = tsd[prior_day]["4. close"]
 
+
 print(prior_close)
 
+import pandas
+df = pandas.read_csv('portfolio.csv')
+print(df)
 
 #breakpoint()
 
@@ -61,15 +79,16 @@ daily_px = int_latest/int_prior-1
 percentage = "{:.00%}".format(daily_px)
 daily_pd = int_latest-int_prior
 
+
+print(f"SELECTED SYMBOL: {stock}")
 print("-------------------------")
 print(f"SELECTED SYMBOL: {symbol}")
-print("-------------------------")
-print("REQUESTING STOCK MARKET DATA...")
 print("REQUEST AT: ", current_time.strftime("%Y-%m-%d %I:%M %p"))
-print("-------------------------")
 print(f"LATEST DAY: {last_refreshed}")
 print(f"LATEST CLOSE: {to_usd(float(latest_close))}")
 print(f"LATEST OPEN: {to_usd(float(latest_open))}")
+
 print(f"PRIOR DAY CLOSE: {to_usd(float(prior_close))}")
 print(f"DAILY $ CHANGE: ", to_usd(daily_pd))
 print(f"DAILY % CHANGE: ", percentage)
+
