@@ -18,6 +18,13 @@ Install the required packages:
 ```sh
 pip install -r requirements.txt
 ```
+Create a portfolio.csv file with using the following set up (these are example stocks):
+```sh
+Stock,Shares
+AAPL,10
+NIKE,5
+```
+
 ### Configuring Environment Variables
 Add a new ".env" file to the root directory of this repo, and place contents like the following inside:
 ```
