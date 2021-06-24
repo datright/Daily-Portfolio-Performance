@@ -9,12 +9,13 @@ import pandas
 
 
 
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
+#from sendgrid import SendGridAPIClient
+#from sendgrid.helpers.mail import Mail
 
 
 load_dotenv()
 
+PORTFOLIO_OWNER = os.getenv("PORTFOLIO_OWNER")
 
 def to_usd(my_price):
     """
@@ -30,7 +31,8 @@ def to_usd(my_price):
 
 ALPHAVANTAGE_API_KEY = os.getenv("ALPHAVANTAGE_API_KEY")
 
-
+import datetime as dt
+todays_date = dt.datetime.now()
 
 #capturing user input
 
@@ -46,7 +48,10 @@ ALPHAVANTAGE_API_KEY = os.getenv("ALPHAVANTAGE_API_KEY")
       #  Shares=input("Company " + str(i +1)+ ": How many shares do you own? ")
        # myFile.writerow([Stock,Shares])
 
-
+print ("-------------------")
+print("Welcome "+ PORTFOLIO_OWNER + "!") 
+print("Here is your updated stock portfolio as of "+ todays_date.strftime("%Y-%m-%d"))
+print ("-------------------")
 
 # 1. INFO INPUTS
 from pandas import read_csv
