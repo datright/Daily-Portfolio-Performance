@@ -72,7 +72,7 @@ for row in portfolio:
     percentage = "{:.00%}".format(daily_px)
     daily_pd = int_latest-int_prior
     print(f"LATEST CLOSE: {to_usd(float(latest_close))}")
-    #print(f"LATEST OPEN: {latest_open}")
+    #print(f"LATEST OPEN: {latest_open}")   
     #print(f"PRIOR DAY CLOSE: {to_usd(float(prior_close))}")
     print(f"DAILY $ CHANGE: ", to_usd(daily_pd))
     print(f"DAILY % CHANGE: ", percentage)
