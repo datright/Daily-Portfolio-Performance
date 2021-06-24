@@ -22,12 +22,12 @@ pip install -r requirements.txt
 Add a new ".env" file to the root directory of this repo, and place contents like the following inside:
 ```
 PORTFOLIO_OWNER="Professor Rossetti"
-```
+
 ALPHAVANTAGE_API_KEY="your unique key"
 ```
 
 ## Usage
 Run the game:
-```sh
+```
 python daily-portfolio.py
 ```
