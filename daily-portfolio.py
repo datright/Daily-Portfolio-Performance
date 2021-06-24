@@ -3,6 +3,8 @@ from dotenv import load_dotenv
 import requests
 import json
 import datetime
+import pandas 
+import math
 load_dotenv()
 
 current_time = datetime.datetime.now()
@@ -53,10 +55,13 @@ tsd = parsed_response["Time Series (Daily)"]
 dates = list(tsd.keys()) # TODO: sort to ensure latest day is first. currently assuming latest day is on top 
 
 latest_day = dates[0]
-
+prior_day = dates[1]
 latest_close = tsd[latest_day]["4. close"]
 latest_open = tsd[latest_day]["1. open"]
+prior_close = tsd[prior_day]["4. close"]
 
+
+print(prior_close)
 
 import pandas
 df = pandas.read_csv('portfolio.csv')
@@ -66,7 +71,13 @@ print(df)
 
 
 
-# 2. INFO OUTPUTS
+# 2. INFO OUTPUTS)
+int_latest = float(latest_close)
+int_prior = float(prior_close)
+
+daily_px = int_latest/int_prior-1
+percentage = "{:.00%}".format(daily_px)
+daily_pd = int_latest-int_prior
 
 
 print(f"SELECTED SYMBOL: {stock}")
@@ -76,4 +87,8 @@ print("REQUEST AT: ", current_time.strftime("%Y-%m-%d %I:%M %p"))
 print(f"LATEST DAY: {last_refreshed}")
 print(f"LATEST CLOSE: {to_usd(float(latest_close))}")
 print(f"LATEST OPEN: {to_usd(float(latest_open))}")
+
+print(f"PRIOR DAY CLOSE: {to_usd(float(prior_close))}")
+print(f"DAILY $ CHANGE: ", to_usd(daily_pd))
+print(f"DAILY % CHANGE: ", percentage)
 
