@@ -46,7 +46,7 @@ latest_close = tsd[latest_day]["4. close"]
 latest_open = tsd[latest_day]["1. open"]
 prior_close = tsd[prior_day]["4. close"]
 
-
+print(prior_close)
 
 
 #breakpoint()
@@ -58,6 +58,7 @@ int_latest = float(latest_close)
 int_prior = float(prior_close)
 
 daily_px = int_latest/int_prior-1
+percentage = "{:.00%}".format(daily_px)
 daily_pd = int_latest-int_prior
 
 print("-------------------------")
@@ -70,5 +71,5 @@ print(f"LATEST DAY: {last_refreshed}")
 print(f"LATEST CLOSE: {to_usd(float(latest_close))}")
 print(f"LATEST OPEN: {to_usd(float(latest_open))}")
 print(f"PRIOR DAY CLOSE: {to_usd(float(prior_close))}")
-print(f"DAILY $ CHANGE: ", to_usd(daily_px))
-print(f"DAILY % CHANGE: ", daily_pd)
+print(f"DAILY $ CHANGE: ", to_usd(daily_pd))
+print(f"DAILY % CHANGE: ", percentage)
