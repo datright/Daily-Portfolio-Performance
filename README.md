@@ -36,5 +36,5 @@ ALPHAVANTAGE_API_KEY="your unique key"
 ## Usage
 Run the portfolio:
 ```
-python daily-portfolio.py
+python app/daily_portfolio.py
 ```
