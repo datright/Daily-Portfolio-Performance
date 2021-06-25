@@ -24,7 +24,7 @@ Create a portfolio.csv file with using the following set up (these are example s
 ```sh
 Stock,Shares
 AAPL,10
-NIKE,5
+NKE,5
 ```
 
 ### Configuring Environment Variables
