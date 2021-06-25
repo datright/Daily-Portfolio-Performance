@@ -3,10 +3,10 @@ from dotenv import load_dotenv
 import requests
 import json
 import datetime
-
+import datetime as dt
 import math
 import pandas
-
+from pandas import read_csv
 
 
 #from sendgrid import SendGridAPIClient
@@ -16,6 +16,7 @@ import pandas
 load_dotenv()
 
 PORTFOLIO_OWNER = os.getenv("PORTFOLIO_OWNER")
+ALPHAVANTAGE_API_KEY = os.getenv("ALPHAVANTAGE_API_KEY")
 
 def to_usd(my_price):
     """
@@ -29,9 +30,16 @@ def to_usd(my_price):
     """
     return f"${my_price:,.2f}" #> $12,000.71
 
-ALPHAVANTAGE_API_KEY = os.getenv("ALPHAVANTAGE_API_KEY")
+def fetch_data(symbol):
+    request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol={symbol}&apikey={ALPHAVANTAGE_API_KEY}"
+    response = requests.get(request_url)
+    parsed_response = json.loads(response.text)
+    return parsed_response
 
-import datetime as dt
+
+
+
+
 todays_date = dt.datetime.now()
 
 #capturing user input
@@ -56,7 +64,7 @@ print ("-------------------")
 # 1. INFO INPUTS
 Portfolio_change=0
 Total_market=0
-from pandas import read_csv
+
 df = read_csv('portfolio.csv')
 #Stock= df["Stock"]
 print(df.head())
@@ -67,12 +75,12 @@ for row in portfolio:
     print(row["Stock"])
     
 
+    parsed_response=fetch_data(row["Stock"])
+    #request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol={row['Stock']}&apikey={ALPHAVANTAGE_API_KEY}"
 
-    request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol={row['Stock']}&apikey={ALPHAVANTAGE_API_KEY}"
+    #response = requests.get(request_url)
 
-    response = requests.get(request_url)
-
-    parsed_response = json.loads(response.text)
+    #parsed_response = json.loads(response.text)
 
     tsd = parsed_response["Time Series (Daily)"]
 
