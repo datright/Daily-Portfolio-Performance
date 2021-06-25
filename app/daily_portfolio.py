@@ -38,49 +38,54 @@ def fetch_data(symbol):
 
 
 if __name__ =="__main__":
-        
+    
 
     todays_date = dt.datetime.now()
 
-    #capturing user input
+#capturing user input
 
-    #import csv
+#import csv
 
-    #with open('portfolio.csv','w+') as file:
+#with open('portfolio.csv','w+') as file:
 
-    #   myFile=csv.writer(file)
-    #  myFile.writerow(["Stock", "Shares"])
-    # noOfStocks=int(input("Please enter the number of different stocks you own: "))
-        #for i in range (noOfStocks):
-        #   Stock=input("Company " + str(i +1)+ " : What is the ticker of the stock you own? ")
-        #  Shares=input("Company " + str(i +1)+ ": How many shares do you own? ")
-        # myFile.writerow([Stock,Shares])
+ #   myFile=csv.writer(file)
+  #  myFile.writerow(["Stock", "Shares"])
+   # noOfStocks=int(input("Please enter the number of different stocks you own: "))
+    #for i in range (noOfStocks):
+     #   Stock=input("Company " + str(i +1)+ " : What is the ticker of the stock you own? ")
+      #  Shares=input("Company " + str(i +1)+ ": How many shares do you own? ")
+       # myFile.writerow([Stock,Shares])
 
-    print ("-------------------")
-    print("Welcome "+ PORTFOLIO_OWNER + "!") 
-    print("Here is your updated stock portfolio as of "+ todays_date.strftime("%Y-%m-%d"))
-    print ("-------------------")
+print ("-------------------")
+print("Welcome "+ PORTFOLIO_OWNER + "!") 
+print("Here is your updated stock portfolio as of "+ todays_date.strftime("%Y-%m-%d"))
+print ("-------------------")
 
-    # 1. INFO INPUTS
-    Portfolio_change=0
-    Total_market=0
+# 1. INFO INPUTS
+Portfolio_change=0
+Total_market=0
+print (PORTFOLIO_OWNER+ "'S "+"PORTFOLIO")
+df = read_csv('portfolio.csv')
+#Stock= df["Stock"]
+print(df.head())
+portfolio=df.to_dict("records")
+for row in portfolio:
 
-    df = read_csv('portfolio.csv')
-    #Stock= df["Stock"]
-    print(df.head())
-    portfolio=df.to_dict("records")
-    for row in portfolio:
+    print(row["Stock"])
+    
+    
+    parsed_response=fetch_data(row["Stock"])
+    if "Error Message" in parsed_response:
+        print("THIS TICKER DOES NOT EXIST. PLEASE CORRECT CSV FILE.")
+        print ("-------------------")
+    
+    else:
 
+    #request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol={row['Stock']}&apikey={ALPHAVANTAGE_API_KEY}"
 
-        print(row["Stock"])
-        
+    #response = requests.get(request_url)
 
-        parsed_response=fetch_data(row["Stock"])
-        #request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol={row['Stock']}&apikey={ALPHAVANTAGE_API_KEY}"
-
-        #response = requests.get(request_url)
-
-        #parsed_response = json.loads(response.text)
+    #parsed_response = json.loads(response.text)
 
         tsd = parsed_response["Time Series (Daily)"]
 
@@ -108,16 +113,16 @@ if __name__ =="__main__":
         print(f"TOTAL STOCK CHANGE:", to_usd(float(Total_change)))
         print ("-------------------")
 
-    print(f"YOUR TOTAL STOCK PORTFOLIO CHANGE FOR THE DAY IS:", to_usd(float(Portfolio_change)))
-    print ("-------------------")
-    print(f"YOUR TOTAL STOCK PORTFOLIO IS WORTH:", to_usd(float(Total_market)))
-    print ("-------------------")
-    if Portfolio_change>0:
-        print("WELL DONE. YOU'VE MADE SOME MONEY TODAY!")
-    elif Portfolio_change==0:
-        print("YOUR TOTAL PORTFOLIO VALUE HAS NOT CHANGED")
-    elif Portfolio_change<0:
-        print("DON'T WORRY. THERE'S ALWAYS TOMORROW!")
+print(f"YOUR TOTAL STOCK PORTFOLIO CHANGE FOR THE DAY IS:", to_usd(float(Portfolio_change)))
+print ("-------------------")
+print(f"YOUR TOTAL STOCK PORTFOLIO IS WORTH:", to_usd(float(Total_market)))
+print ("-------------------")
+if Portfolio_change>0:
+    print("WELL DONE. YOU'VE MADE SOME MONEY TODAY!")
+elif Portfolio_change==0:
+    print("YOUR TOTAL PORTFOLIO VALUE HAS NOT CHANGED")
+elif Portfolio_change<0:
+    print("DON'T WORRY. THERE'S ALWAYS TOMORROW!")
 
 
 
@@ -129,4 +134,4 @@ if __name__ =="__main__":
 
 
 
-        
+    
