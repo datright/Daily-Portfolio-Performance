@@ -1,6 +1,8 @@
 # Daily-Portfolio-Performance
 Freestyle Project: Daily Stock Portfolio Performance by Jourdan Bua, Dat Hoang, Amanda Krichman, and Steven Shtaynberger
 
+This should be run after market close to get an overview of your stock portfolio's performance for the day.
+
 ## Installation
 Clone or download this repo onto your local computer.
 Then navigate there from the command line (subsequent commands assume you are running them from the local repository's root directory):
