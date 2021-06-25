@@ -6,7 +6,7 @@ import datetime
 
 import math
 import pandas
-
+import emoji
 
 
 #from sendgrid import SendGridAPIClient
@@ -99,9 +99,7 @@ for row in portfolio:
 print(f"YOUR TOTAL STOCK PORTFOLIO CHANGE FOR THE DAY IS:", to_usd(float(Portfolio_change)))
 
 
-
-
-#
+#print(emoji.emojize((":winking face:"))
 
 
 
