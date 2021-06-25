@@ -101,8 +101,15 @@ for row in portfolio:
     print ("-------------------")
 
 print(f"YOUR TOTAL STOCK PORTFOLIO CHANGE FOR THE DAY IS:", to_usd(float(Portfolio_change)))
-
+print ("-------------------")
 print(f"YOUR TOTAL STOCK PORTFOLIO IS WORTH:", to_usd(float(Total_market)))
+print ("-------------------")
+if Portfolio_change>0:
+    print("WELL DONE. YOU'VE MADE SOME MONEY TODAY")
+elif Portfolio_change==0:
+    print("YOUR TOTAL PORTFOLIO VALUE HAS NOT CHANGED")
+elif Portfolio_change<0:
+    print("DON'T WORRY. THERE'S ALWAYS TOMORROW!")
 
 
 
