@@ -55,6 +55,7 @@ print ("-------------------")
 
 # 1. INFO INPUTS
 Portfolio_change=0
+Total_market=0
 from pandas import read_csv
 df = read_csv('portfolio.csv')
 #Stock= df["Stock"]
@@ -87,21 +88,24 @@ for row in portfolio:
     percentage = "{:.2%}".format(daily_px)
     daily_pd = int_latest-int_prior
     Total_change=row["Shares"]*daily_pd
+    Market_Value=row["Shares"]*float(latest_close)
+    Total_market=Total_market+Market_Value
     Portfolio_change=Portfolio_change+Total_change
     print(f"LATEST CLOSE: {to_usd(float(latest_close))}")
     #print(f"LATEST OPEN: {latest_open}")   
     #print(f"PRIOR DAY CLOSE: {to_usd(float(prior_close))}")
     print(f"DAILY $ CHANGE: ", to_usd(daily_pd))
     print(f"DAILY % CHANGE: ", percentage)
+    print(f"TOTAL MARKET VALUE:", to_usd(float(Market_Value)))
     print(f"TOTAL STOCK CHANGE:", to_usd(float(Total_change)))
     print ("-------------------")
 
 print(f"YOUR TOTAL STOCK PORTFOLIO CHANGE FOR THE DAY IS:", to_usd(float(Portfolio_change)))
 
+print(f"YOUR TOTAL STOCK PORTFOLIO IS WORTH:", to_usd(float(Total_market)))
 
 
 
-#
 
 
 
