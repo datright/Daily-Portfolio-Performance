@@ -54,6 +54,7 @@ print("Here is your updated stock portfolio as of "+ todays_date.strftime("%Y-%m
 print ("-------------------")
 
 # 1. INFO INPUTS
+Portfolio_change=0
 from pandas import read_csv
 df = read_csv('portfolio.csv')
 #Stock= df["Stock"]
@@ -63,6 +64,7 @@ for row in portfolio:
 
 
     print(row["Stock"])
+    
 
 
     request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol={row['Stock']}&apikey={ALPHAVANTAGE_API_KEY}"
@@ -74,7 +76,6 @@ for row in portfolio:
     tsd = parsed_response["Time Series (Daily)"]
 
     dates = list(tsd.keys()) # TODO: sort to ensure latest day is first. currently assuming latest day is on top 
-
     latest_day = dates[0]
     prior_day = dates[1]
     latest_close = tsd[latest_day]["4. close"]
@@ -84,15 +85,23 @@ for row in portfolio:
     int_prior = float(prior_close)
     daily_px = int_latest/int_prior-1
     percentage = "{:.2%}".format(daily_px)
-    #percentage = "{:.00%}".format(daily_px)
     daily_pd = int_latest-int_prior
     Total_change=row["Shares"]*daily_pd
+    Portfolio_change=Portfolio_change+Total_change
     print(f"LATEST CLOSE: {to_usd(float(latest_close))}")
     #print(f"LATEST OPEN: {latest_open}")   
     #print(f"PRIOR DAY CLOSE: {to_usd(float(prior_close))}")
     print(f"DAILY $ CHANGE: ", to_usd(daily_pd))
     print(f"DAILY % CHANGE: ", percentage)
     print(f"TOTAL STOCK CHANGE:", to_usd(float(Total_change)))
+    print ("-------------------")
+
+print(f"YOUR TOTAL STOCK PORTFOLIO CHANGE FOR THE DAY IS:", to_usd(float(Portfolio_change)))
+
+
+
+
+#
 
 
 
